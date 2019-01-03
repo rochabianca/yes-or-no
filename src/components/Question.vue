@@ -5,8 +5,9 @@
       <label for="question">Question</label>
       <input name="question" type="text" placeholder="Do you liked this app?">
       <input type="submit" value="Send your doubt" v-on:click="makeQuestion">
+      <button v-on:click="clearForm">Clear</button>
     </form>
-    <Answer :BigDAnswer="answerFromBigD"/>
+    <Answer v-if="answerFromBigD && answerFromBigD.answer" :BigDAnswer="answerFromBigD"/>
   </div>
 </template>
 
@@ -29,8 +30,10 @@ export default {
       e.preventDefault();
       axios.get("https://yesno.wtf/api").then(response => {
         this.answerFromBigD = response.data;
-        console.log(response.data);
       });
+    },
+    clearForm: function() {
+      this.answerFromBigD = null;
     }
   }
 };
